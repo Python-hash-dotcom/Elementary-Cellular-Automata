@@ -1,1 +1,41 @@
+def pattern_generator(rule_number, generations):
+    rule_bin = f"{rule_number:08b}"
+    current = [1]
+    width = 2*generations + 1
+    all_lines = [current[:]]
+    current = [0]* width
+    current[generations] = 1
+    for _ in range(generations):
+        new = [0] + current + [0]
+        new_row = []
+        for i in range(len(new) - 2):
+            left, center, right = new[i], new[i+1], new[i+2]
+            neighborhood = (left << 2) | (center << 1) | right
+            new_row.append(int(rule_bin[7 - neighborhood]))
+        
+        current = new_row
+        all_lines.append(current[:])
+    
+    return all_lines
+
+
+def output_pattern(pattern):
+    max_width = len(pattern[-1])
+    for row in pattern:
+        line = ''.join(' ' if cell == 1 else '█' for cell in row)
+        print(line.center(max_width))
+
+
+try:
+    rule = int(input("Enter rule number (1-255): "))
+    gens = int(input("Number of generations: "))
+    if not (0 < rule < 256):
+        print("Rule must be between 0 and 255")
+    else:
+        pattern = pattern_generator(rule, gens)
+        print(f"Rule {rule} - {gens} generations")
+        output_pattern(pattern)
+
+except ValueError:
+        print("Please enter valid integers")
 
