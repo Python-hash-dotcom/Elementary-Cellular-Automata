@@ -1,0 +1,42 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class test {
+
+    public static List<List<Integer>> patternGenerator(int ruleNumber, int generations) {
+        String ruleBin = String.format("%8s", Integer.toBinaryString(ruleNumber)).replace(' ', '0');
+        
+        int width = 2 * generations + 1;
+        List<Integer> current = new ArrayList<>(Collections.nCopies(width, 0));
+        current.set(generations, 1);
+
+        List<List<Integer>> allLines = new ArrayList<>();
+        allLines.add(new ArrayList<>(current));
+
+        for (int gen = 0; gen < generations; gen++) {
+            List<Integer> newRow = new ArrayList<>();
+            for (int i = 0; i < current.size(); i++) {
+                int left = current.get(((i - 1) % width + width) % width);
+                int center = current.get(i);
+                int right = current.get((i + 1) % width);
+
+                int neighborhood = (left << 2) | (center << 1) | right;
+                newRow.add(Character.getNumericValue(ruleBin.charAt(7 - neighborhood)));
+            }
+            current = newRow;
+            allLines.add(new ArrayList<>(current));
+        }
+        return allLines;
+    }
+
+    public static void main(String[] args) {
+        List<List<Integer>> pattern = patternGenerator(30, 20);
+        for (List<Integer> row : pattern) {
+            for (int cell : row) {
+                System.out.print(cell == 1 ? "  " : "██");
+            }
+            System.out.println();
+        }
+    }
+}
