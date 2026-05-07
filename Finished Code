@@ -8,8 +8,10 @@ def pattern_generator(rule_number, generations):
     for _ in range(generations):
         new = [0] + current + [0]
         new_row = []
-        for i in range(len(new) - 2):
-            left, center, right = new[i], new[i+1], new[i+2]
+        for i in range(len(current)):
+            left = current[(i - 1) % len(current)]
+            center = current[i]
+            right = current[(i + 1) % len(current)]
             neighborhood = (left << 2) | (center << 1) | right
             new_row.append(int(rule_bin[7 - neighborhood]))
         
@@ -22,7 +24,7 @@ def pattern_generator(rule_number, generations):
 def output_pattern(pattern):
     max_width = len(pattern[-1])
     for row in pattern:
-        line = ''.join(' ' if cell == 1 else '█' for cell in row)
+        line = ''.join('  ' if cell == 1 else '██' for cell in row)
         print(line.center(max_width))
 
 
@@ -39,3 +41,7 @@ try:
 except ValueError:
         print("Please enter valid integers")
 
+# for i in range(256):
+   # pattern = pattern_generator(i, 20)
+  #   print(f"Rule {i}")
+    # output_pattern(pattern)
