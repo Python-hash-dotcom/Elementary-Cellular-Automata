@@ -1,10 +1,18 @@
 import java.util.List;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class test {
 
     public static List<List<Integer>> patternGenerator(int ruleNumber, int generations) {
+        if (ruleNumber < 0 || ruleNumber > 255) {
+            throw new IllegalArgumentException("Rule must be between 0 and 255.");
+        }
+        if (generations < 0) {
+            throw new IllegalArgumentException("Generations must be non-negative.");
+        }
+
         String ruleBin = String.format("%8s", Integer.toBinaryString(ruleNumber)).replace(' ', '0');
         
         int width = 2 * generations + 1;
@@ -19,7 +27,7 @@ public class test {
             for (int i = 0; i < current.size(); i++) {
                 int left = current.get(((i - 1) % width + width) % width);
                 int center = current.get(i);
-                int right = current.get((i + 1) % width);
+                int right = current.get((i + 1) % current.size());
 
                 int neighborhood = (left << 2) | (center << 1) | right;
                 newRow.add(Character.getNumericValue(ruleBin.charAt(7 - neighborhood)));
@@ -30,13 +38,27 @@ public class test {
         return allLines;
     }
 
-    public static void main(String[] args) {
-        List<List<Integer>> pattern = patternGenerator(30, 20);
+public static void main(String[] args) {
+    try {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter rule (0-255): ");
+        int rule = Integer.parseInt(scanner.nextLine());
+        System.out.print("Enter generations (0-50): ");
+        int gens = Integer.parseInt(scanner.nextLine());
+
+        List<List<Integer>> pattern = patternGenerator(rule, gens);
+        System.out.println("Rule " + rule + " - " + gens + " Generations");
         for (List<Integer> row : pattern) {
             for (int cell : row) {
-                System.out.print(cell == 1 ? "  " : "██");
+                System.out.print(cell == 1 ? "██" : "  ");
             }
             System.out.println();
         }
-    }
+
+        } catch (NumberFormatException e) {
+            System.out.println("ValueError: please enter a valid integer");
+        } catch (IllegalArgumentException e) {
+            System.out.println("ValueError: " + e.getMessage());
+        }
+}
 }
