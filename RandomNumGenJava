@@ -1,0 +1,71 @@
+import java.util.List;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class randomNumber {
+
+    public static List<List<Integer>> patternGenerator(int ruleNumber, int generations) {
+        if (ruleNumber < 0 || ruleNumber > 255) {
+            throw new IllegalArgumentException("Rule must be between 0 and 255.");
+        }
+        if (generations < 0) {
+            throw new IllegalArgumentException("Generations must be non-negative.");
+        }
+
+        String ruleBin = String.format("%8s", Integer.toBinaryString(ruleNumber)).replace(' ', '0');
+
+        int width = 2 * generations + 1;
+        List<Integer> current = new ArrayList<>(Collections.nCopies(width, 0));
+        current.set(generations, 1);
+
+        List<List<Integer>> allLines = new ArrayList<>();
+        allLines.add(new ArrayList<>(current));
+
+        for (int gen = 0; gen < generations; gen++) {
+            List<Integer> newRow = new ArrayList<>();
+            for (int i = 0; i < current.size(); i++) {
+                int left = current.get(((i - 1) % width + width) % width);
+                int center = current.get(i);
+                int right = current.get((i + 1) % current.size());
+
+                int neighborhood = (left << 2) | (center << 1) | right;
+                newRow.add(Character.getNumericValue(ruleBin.charAt(7 - neighborhood)));
+            }
+            current = newRow;
+            allLines.add(new ArrayList<>(current));
+        }
+        return allLines;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("How many random numbers do you want to generate? ");
+        int randomNumAmount = sc.nextInt();
+
+        System.out.print("What is the range for the random numbers? ");
+        int boundary = sc.nextInt();
+
+        sc.close();
+
+        int seed = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+        int bits = (boundary <= 1) ? 1 : (int) Math.ceil(Math.log(boundary) / Math.log(2));
+        int generations = (bits + 1) * randomNumAmount;
+
+        List<List<Integer>> pattern = patternGenerator(30, generations);
+        int mid = generations;
+
+        for (int i = 0; i < randomNumAmount; i++) {
+            StringBuilder bitString = new StringBuilder();
+            for (int j = 0; j < bits; j++) {
+                int row = (seed + (i * bits) + j) % pattern.size();
+                bitString.append(pattern.get(row).get(mid));
+            }
+            int number = Integer.parseInt(bitString.toString(), 2) % boundary;
+            System.out.println(number);
+        }
+    }
+
+}
