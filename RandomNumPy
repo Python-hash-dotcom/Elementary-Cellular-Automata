@@ -1,0 +1,46 @@
+import math
+
+
+def pattern_generator(rule_number, generations):
+    rule_bin = f"{rule_number:08b}"
+    width = 2 * generations + 1
+    current = [0] * width
+    current[generations] = 1
+    all_lines = [current[:]]
+
+    for _ in range(generations):
+        new_row = []
+        for i in range(width):
+            left = current[(i - 1) % width]
+            center = current[i]
+            right = current[(i + 1) % width]
+            neighborhood = (left << 2) | (center << 1) | right
+            new_row.append(int(rule_bin[7 - neighborhood]))
+        current = new_row
+        all_lines.append(current[:])
+
+    return all_lines
+
+
+random_num_amount = int(input("How many random numbers do you want? "))
+boundary = int(input("What is the range of the random numbers? "))
+seed = 0
+bits = int(math.ceil(math.log2(boundary)))
+generations = (bits + 1) * random_num_amount
+grid = pattern_generator(30, generations)
+mid = generations
+
+for i in range(random_num_amount):
+    bit_string = ""
+    for j in range(bits):
+        row = (i * bits) + j % len(grid)
+        bit_string += str(grid[row][mid])
+
+    number = int(bit_string, 2) % boundary
+    print(number)  # Output the generated random number
+
+for i in range(26):
+    while True:
+        a = pattern_generator(30, generations)
+        if a == i:
+            print(f"{i}" + " is generated")
