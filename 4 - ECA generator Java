@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-
+// this is the Java version of the Python ECA generator. It works the same way with the same functions
 public class test {
 
     public static List<List<Integer>> patternGenerator(int ruleNumber, int generations) {
@@ -40,15 +40,12 @@ public class test {
 
 public static void main(String[] args) {
     try {
-        // Interchangeable between hardcoded values and user input, comment out the one you want to use.
-        /* Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter rule (0-255): ");
         int rule = Integer.parseInt(scanner.nextLine());
         System.out.print("Enter generations (0-50): ");
         int gens = Integer.parseInt(scanner.nextLine());
-        */
-        int rule = 30; 
-        int gens = 15; 
+ 
 
         List<List<Integer>> pattern = patternGenerator(rule, gens);
         System.out.println("Rule " + rule + " - " + gens + " Generations");
