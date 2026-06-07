@@ -1,0 +1,35 @@
+# This is the original pseudocode for the ECA generator
+# The actual algorithm in Python and Java was roughly the same, just a few bugs were fixed and a different method of centering each line was used
+
+
+RuleNumber = int(input(“Enter an integer to be your rule”))
+Generations = int(input(“Number of generations”))
+If 256 > RuleNumber > 0:
+	outputpatern(paternGenerator(RuleNumber, Generations))
+Function paternGenerator(RuleNumber, Generations):
+	Rule = string(binary(RuleNumber))
+	AllLines = [[1]]
+	newLineLength = 1
+for i in range(GenNum):
+	For j in range(newLineLength)
+	newLine = []
+3above = reverse(binary(AllLines[i-1][j-1]+AllLines[i -1][j]+AllLines[i-1][j+1]))
+	For i in range newLineLength:
+			If Rule[3above] = 1:
+				newLine.add(1)
+			Else:
+				newline.add(0)	
+	for i in range(2*GenNum  - newlinelength):
+		newline = 0 + newline + 0
+	Newlinelength += 2
+	AllLines.add(newline)
+	return AllLines
+Function outputpatern(binarypatern):
+	For i in range length(binarypatern):
+		Line = []
+		For j in range len binarypatern[i]:
+			If binarypattern[i][j] = 1:
+				Line.Add(   )
+			Else:
+				Line.Add(   )
+		print(line)
