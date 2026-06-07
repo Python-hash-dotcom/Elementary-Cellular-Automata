@@ -1,3 +1,7 @@
+# this is the python implementation of the ECA generator
+# Pattern_generator is the algortithm that returns a 2D array of bits representing an ECA rule. This is what is used in the aplications.
+# Output_pattern converts this array into black and white squares and outputs them on screen
+
 def pattern_generator(rule_number, generations):
     rule_bin = f"{rule_number:08b}"
     current = [1]
