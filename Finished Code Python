@@ -5,6 +5,7 @@ def pattern_generator(rule_number, generations):
     all_lines = [current[:]]
     current = [0]* width
     current[generations] = 1
+    all_lines.append(current)
     for _ in range(generations):
         new = [0] + current + [0]
         new_row = []
@@ -40,8 +41,3 @@ try:
 
 except ValueError:
         print("Please enter valid integers")
-
-# for i in range(256):
-   # pattern = pattern_generator(i, 20)
-  #   print(f"Rule {i}")
-    # output_pattern(pattern)
