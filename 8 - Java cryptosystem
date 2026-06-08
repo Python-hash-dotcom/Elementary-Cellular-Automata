@@ -8,6 +8,8 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.Scanner;
 
+// Java version of the cryptosystem
+
 public class CellularAutomatonCipher {
     static int[] seedToInitialState(long seed, int width) throws NoSuchAlgorithmException {
 
