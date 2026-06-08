@@ -1,4 +1,8 @@
 import math
+"""
+This program uses the pattern generator function on rule 30 to
+generate a random bit stream from the central column that are used to output numbers
+"""
 
 
 def pattern_generator(rule_number, generations):
@@ -7,7 +11,6 @@ def pattern_generator(rule_number, generations):
     current = [0] * width
     current[generations] = 1
     all_lines = [current[:]]
-
     for _ in range(generations):
         new_row = []
         for i in range(width):
@@ -35,12 +38,5 @@ for i in range(random_num_amount):
     for j in range(bits):
         row = (i * bits) + j % len(grid)
         bit_string += str(grid[row][mid])
-
     number = int(bit_string, 2) % boundary
-    print(number)  # Output the generated random number
-
-for i in range(26):
-    while True:
-        a = pattern_generator(30, generations)
-        if a == i:
-            print(f"{i}" + " is generated")
+    print(number)
