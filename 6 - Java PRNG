@@ -3,6 +3,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
+// This is the Java implementaation  of the pseudo random number generator
+
 public class randomNumber {
 
     public static List<List<Integer>> patternGenerator(int ruleNumber, int generations) {
