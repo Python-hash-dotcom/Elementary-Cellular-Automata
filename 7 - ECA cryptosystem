@@ -1,5 +1,11 @@
 import hashlib
-
+"""
+This program uses the central column in a similar way to
+the random number generator, but this time as a way to encrypt the input.
+This is an XOr based system, so the encryption algorithm is the same as the 
+decryption one. Sha 256 has been aplied to the key so that nearby keys do not
+reveal any of the message.
+"""
 def seed_to_initial_state(seed, width):
     seed_bytes = seed.to_bytes((seed.bit_length() + 7) // 8 or 1, 'big')
     digest = hashlib.sha256(seed_bytes).digest()
@@ -14,10 +20,7 @@ def seed_to_initial_state(seed, width):
 def pattern_generator(rule_number, generations, seed):
     rule_bin = f"{rule_number:08b}"
     width = 2 * generations + 1
-    
-    # Replace direct seed unpacking with hashed initial state
     current = seed_to_initial_state(seed, width)
-    
     all_lines = [current[:]]
     for _ in range(generations):
         padded = [0] + current + [0]
